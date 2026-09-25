@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Hello World!</h1>
+    <p>Welcome to the Guestbook! I hope it serves you very well.</p>
+    <p>Please fill in this form to add an entry:</p>
+    <h2>Guestbook Formular</h2>
+    <p>Input your name</p>
+    <div class="form">
+    <textarea id="entry" rows="1" placeholder="Name"></textarea>
+    <p>Input your last name</p>
+    <textarea id="last_name" rows="1" placeholder="Last Name"></textarea>
+    <p>Input your message</p>
+    <textarea id="message" rows="4" placeholder="Enter your message here!"></textarea>
+    <p>Input your e-mail</p>
+     <textarea id="email" rows="1" placeholder="E-mail"></textarea>
+     <p>Input your password</p>
+      <textarea id="password" rows="1" placeholder="Password"></textarea>
+    <br>
+    <button id="submission">Submit</button>
+    </div>
+
+</body>
+</html>
