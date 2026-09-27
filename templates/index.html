@@ -3,28 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Guestbook</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Hello World!</h1>
+    <h1>Guestbook</h1>
     <p>Welcome to the Guestbook! I hope it serves you very well.</p>
     <p>Please fill in this form to add an entry:</p>
-    <h2>Guestbook Formular</h2>
-    <p>Input your name</p>
-    <div class="form">
-    <textarea id="entry" rows="1" placeholder="Name"></textarea>
-    <p>Input your last name</p>
-    <textarea id="last_name" rows="1" placeholder="Last Name"></textarea>
-    <p>Input your message</p>
-    <textarea id="message" rows="4" placeholder="Enter your message here!"></textarea>
-    <p>Input your e-mail</p>
-     <textarea id="email" rows="1" placeholder="E-mail"></textarea>
-    <br>
-    <button id="submission">Submit</button>
-    </div>
-    <h2>Guestbook Registers</h2>
-    <script></script>
+    <h2>Sign the guestbook</h2>
+    <form id="entry-form" class="form">
+        <label for="name">First name</label>
+        <input id="name" name="name" autocomplete="given-name" required>
+        <label for="last_name">Last name</label>
+        <input id="last_name" name="last_name" autocomplete="family-name" required>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+        <button id="submission" type="submit">Submit</button>
+        <p id="form-error" role="alert" hidden></p>
+    </form>
+    <h2>Guestbook Register</h2>
+    <section id="entries" aria-live="polite"></section>
+    <script>
+        const form = document.querySelector('#entry-form');
+        const entriesList = document.querySelector('#entries');
+        const formError = document.querySelector('#form-error');
+
+        function displayEntry(entry) {
+            const article = document.createElement('article');
+            article.className = 'guestbook-entry';
+
+            const heading = document.createElement('h3');
+            heading.textContent = `${entry.name} ${entry.last_name}`;
+            const message = document.createElement('p');
+            message.textContent = entry.message;
+            const email = document.createElement('p');
+            email.textContent = `E-mail: ${entry.email}`;
+            const timestamp = document.createElement('time');
+            timestamp.dateTime = entry.timestamp;
+            timestamp.textContent = new Date(entry.timestamp).toLocaleString();
+
+            article.append(heading, message, email, timestamp);
+            entriesList.prepend(article);
+        }
+
+        async function loadEntries() {
+            const response = await fetch('/entries');
+            if (!response.ok) throw new Error('Could not load entries.');
+            const entries = await response.json();
+            entries.forEach(displayEntry);
+        }
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            formError.hidden = true;
+            const values = Object.fromEntries(new FormData(form));
+
+            try {
+                const response = await fetch('/entries', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(values),
+                });
+                if (!response.ok) throw new Error('Could not save your entry.');
+                displayEntry(await response.json());
+                form.reset();
+            } catch (error) {
+                formError.textContent = error.message;
+                formError.hidden = false;
+            }
+        });
+
+        loadEntries().catch((error) => {
+            formError.textContent = error.message;
+            formError.hidden = false;
+        });
+    </script>
 
 </body>
 </html>

@@ -6,6 +6,32 @@ textarea {
     font-family: Arial, Helvetica, sans-serif;
     border-radius: 5px;
 }
+input,
+textarea {
+    box-sizing: border-box;
+    display: block;
+    margin: 0 0 1rem;
+    max-width: 32rem;
+    padding: 0.55rem;
+    width: 100%;
+}
+button {
+    cursor: pointer;
+    padding: 0.55rem 1rem;
+}
+.guestbook-entry {
+    border-bottom: 1px solid #b9ad9b;
+    max-width: 42rem;
+    padding: 0.75rem 0;
+}
+.guestbook-entry h3,
+.guestbook-entry p {
+    margin: 0.35rem 0;
+}
+.guestbook-entry time {
+    color: #5b554d;
+    font-size: 0.9rem;
+}
 h1 {
     background-color:blanchedalmond
 }
