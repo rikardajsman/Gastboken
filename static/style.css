@@ -1,6 +1,6 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color:antiquewhite;
+    background-color:rgb(203, 217, 239);
 }
 textarea {
     font-family: Arial, Helvetica, sans-serif;
@@ -20,7 +20,7 @@ button {
     padding: 0.55rem 1rem;
 }
 .guestbook-entry {
-    border-bottom: 1px solid #b9ad9b;
+    border-bottom: 1px solid #e5e3e1;
     max-width: 42rem;
     padding: 0.75rem 0;
 }
@@ -31,7 +31,4 @@ button {
 .guestbook-entry time {
     color: #5b554d;
     font-size: 0.9rem;
-}
-h1 {
-    background-color:blanchedalmond
 }
